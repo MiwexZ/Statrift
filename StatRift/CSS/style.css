@@ -1,0 +1,738 @@
+/* Importación de Fuentes Premium de Google */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@300;400;500;700&display=swap');
+
+:root {
+    --bg-dark: #0f172a;           /* Fondo principal oscuro profundo */
+    --bg-card: rgba(30, 41, 59, 0.7); /* Fondo de tarjeta semitransparente (Glassy) */
+    --text-primary: #f8fafc;      /* Texto principal casi blanco */
+    --text-muted: #94a3b8;        /* Texto secundario grisáceo */
+    --gold-accent: #c5a059;       /* Color dorado de acento premium */
+    --gold-hover: #e5b962;        /* Dorado más brillante al hacer hover */
+    --border-glass: rgba(197, 160, 89, 0.2); /* Borde dorado translúcido para el efecto gema/cristal */
+    --shadow-gold: 0 4px 30px rgba(197, 160, 89, 0.1); 
+    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    background-image: radial-gradient(circle at top right, rgba(197, 160, 89, 0.05), transparent 40%),
+                      radial-gradient(circle at bottom left, rgba(15, 23, 42, 1), transparent 50%);
+    background-attachment: fixed;
+    margin: 0;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+}
+
+.text-gold {
+    color: var(--gold-accent) !important;
+}
+
+.bg-glass {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    box-shadow: var(--shadow-gold);
+    transition: var(--transition-smooth);
+}
+
+.bg-glass:hover {
+    transform: translateY(-5px);
+    border-color: rgba(197, 160, 89, 0.5);
+    box-shadow: 0 10px 40px rgba(197, 160, 89, 0.2);
+}
+
+.blanco {
+    color: var(--text-primary);
+}
+
+.fondo_negro {
+    background-color: var(--bg-dark);
+}
+
+/* Hero Section */
+.hero-section {
+    padding: 6rem 2rem;
+    text-align: center;
+    background: radial-gradient(ellipse at bottom, rgba(197, 160, 89, 0.15) 0%, var(--bg-dark) 70%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 3rem;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold-hover) 0%, var(--gold-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 3rem 0 2rem;
+    color: var(--text-primary);
+    text-align: center;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 3px;
+    background: var(--gold-accent);
+    bottom: -10px;
+    left: 25%;
+    border-radius: 2px;
+}
+
+
+
+/* Fondo Login */
+.fondo_login {
+    background-image: linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url("img/fondo_login2.webp");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Elementos Navbar Premium */
+.navbar {
+    background: rgba(15, 23, 42, 0.8) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem 2rem;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    color: var(--gold-accent) !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.navbar-nav .nav-link {
+    color: var(--text-primary) !important;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    margin: 0 0.5rem;
+    position: relative;
+}
+
+.navbar-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--gold-accent);
+    transition: var(--transition-smooth);
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .active > .nav-link::after {
+    width: 100%;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .active > .nav-link {
+    color: var(--gold-accent) !important;
+}
+
+/* Formularios y Botones Premium */
+.form-control {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--gold-accent) !important;
+    box-shadow: 0 0 0 0.25rem rgba(197, 160, 89, 0.25) !important;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.btn-primary, .btn-outline-success {
+    background-color: var(--gold-accent) !important;
+    border-color: var(--gold-accent) !important;
+    color: var(--bg-dark) !important;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.5rem 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.btn-primary:hover, .btn-outline-success:hover {
+    background-color: var(--gold-hover) !important;
+    border-color: var(--gold-hover) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+}
+
+button.btn.btn-outline-success.my-2.my-sm-0 {
+    margin-left: 1rem;
+    background-color: transparent !important;
+    color: var(--gold-accent) !important;
+}
+
+button.btn.btn-outline-success.my-2.my-sm-0:hover {
+    background-color: var(--gold-accent) !important;
+    color: var(--bg-dark) !important;
+}
+
+div#navbarNav {
+    justify-content: space-between;
+}
+
+.row {
+    text-align: center;
+}
+
+/* Tablas Premium */
+.table-premium {
+    background-color: transparent !important;
+    color: var(--text-primary);
+}
+
+.table-premium th {
+    background-color: rgba(197, 160, 89, 0.1) !important;
+    color: var(--gold-accent);
+    border-top: none;
+    border-bottom: 2px solid var(--gold-accent) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.table-premium td {
+    background-color: rgba(30, 41, 59, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.table-premium tbody tr {
+    transition: var(--transition-smooth);
+}
+
+.table-premium tbody tr:hover td {
+    background-color: rgba(197, 160, 89, 0.05) !important;
+    color: var(--gold-hover);
+}
+
+/* Tarjetas */
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.card-body {
+    padding: 1.5rem;
+}
+.card-title {
+    color: var(--gold-accent);
+    margin-bottom: 1rem;
+}
+.card-text {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+/* =========================================================
+   PAGE HERO — Cabecera de sección interior
+   ========================================================= */
+.page-hero {
+    padding: 5rem 1rem 4rem;
+    background: radial-gradient(ellipse at top, rgba(197, 160, 89, 0.12) 0%, transparent 65%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 1rem;
+}
+
+.page-hero-icon {
+    font-size: 3rem;
+    color: var(--gold-accent);
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 18px rgba(197,160,89,0.5));
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(197,160,89,0.4)); }
+    50%       { filter: drop-shadow(0 0 28px rgba(197,160,89,0.8)); }
+}
+
+.page-hero-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold-hover) 0%, var(--gold-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -1px;
+    margin-bottom: 0.75rem;
+}
+
+.page-hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* =========================================================
+   CHAMPION CARDS — Tarjetas de campeones con overlay
+   ========================================================= */
+.champion-card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.champion-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(197, 160, 89, 0.25);
+    border-color: rgba(197, 160, 89, 0.6);
+}
+
+.champion-img-wrap {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.champion-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease;
+}
+
+.champion-card:hover .champion-img {
+    transform: scale(1.08);
+}
+
+.champion-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    backdrop-filter: blur(4px);
+}
+
+.champion-card:hover .champion-overlay {
+    opacity: 1;
+}
+
+.champion-body {
+    padding: 1.25rem;
+}
+
+.champion-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--gold-accent);
+    margin-bottom: 0.75rem;
+}
+
+/* Skills Q W E R */
+.skills-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.skill-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+}
+
+.skill-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: rgba(197, 160, 89, 0.15);
+    border: 1px solid rgba(197, 160, 89, 0.4);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gold-accent);
+    font-family: 'Outfit', sans-serif;
+}
+
+.skill-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+    padding-top: 3px;
+}
+
+/* =========================================================
+   PLAYER CARDS — Tarjetas de perfil de jugador
+   ========================================================= */
+.player-card {
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: var(--transition-smooth);
+}
+
+.player-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 50px rgba(197, 160, 89, 0.2);
+    border-color: rgba(197, 160, 89, 0.5);
+}
+
+.player-avatar {
+    width: 72px;
+    height: 72px;
+    background: rgba(197, 160, 89, 0.1);
+    border: 2px solid rgba(197, 160, 89, 0.35);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--gold-accent);
+    margin: 0 auto 1rem;
+    transition: var(--transition-smooth);
+}
+
+.player-card:hover .player-avatar {
+    background: rgba(197, 160, 89, 0.2);
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
+}
+
+.player-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.1rem;
+}
+
+.player-nick {
+    font-size: 0.85rem;
+    color: var(--gold-accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+}
+
+.player-role {
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.player-email {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin: 0;
+    word-break: break-all;
+}
+
+.player-team-badge {
+    background: rgba(197, 160, 89, 0.1);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 8px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    color: var(--gold-accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* =========================================================
+   LEAGUE CARDS — Tarjetas de ligas
+   ========================================================= */
+.league-card {
+    border-radius: 16px;
+    overflow: hidden;            /* Blindaje: nada puede salir de la tarjeta */
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.league-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(197, 160, 89, 0.3);
+    border-color: var(--gold-accent);
+}
+
+.league-logo-wrap {
+    background: rgba(10, 16, 32, 0.6);
+    padding: 1.5rem;
+    height: 180px;               /* Un poco más alto para respirar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+}
+
+.league-logo {
+    width: 100%;
+    height: 100%;
+    max-height: 120px;
+    object-fit: contain;         /* Mantiene las proporciones sin deformar ni salirse */
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.league-card:hover .league-logo {
+    transform: scale(1.1);
+    filter: drop-shadow(0 8px 24px rgba(197,160,89,0.4));
+}
+
+.league-body {
+    padding: 1.5rem;
+}
+
+.league-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.5rem;
+}
+
+/* =========================================================
+   BUTTONS — Variantes doradas
+   ========================================================= */
+.btn-gold {
+    background: linear-gradient(135deg, var(--gold-hover), var(--gold-accent));
+    color: var(--bg-dark) !important;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    padding: 0.45rem 1.25rem;
+    transition: var(--transition-smooth);
+    text-decoration: none;
+}
+
+.btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(197,160,89,0.5);
+    filter: brightness(1.1);
+}
+
+.btn-gold-outline {
+    background: transparent;
+    color: var(--gold-accent) !important;
+    border: 1px solid var(--gold-accent);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.4rem 1rem;
+    transition: var(--transition-smooth);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-gold-outline:hover {
+    background: var(--gold-accent);
+    color: var(--bg-dark) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(197,160,89,0.35);
+}
+
+/* =========================================================
+   NAVBAR TOGGLER — Icono en fondo oscuro
+   ========================================================= */
+.navbar-toggler {
+    border-color: rgba(197, 160, 89, 0.4) !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(197, 160, 89, 0.9)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* =========================================================
+   UTILIDADES RESPONSIVE
+   ========================================================= */
+@media (max-width: 768px) {
+    .page-hero-title { font-size: 2.4rem; }
+    .hero-title      { font-size: 2.8rem; }
+    .champion-img-wrap { height: 160px; }
+    .league-logo       { height: 90px; }
+}
+
+/* =========================================================
+   ITEM CARDS — Tarjetas de objetos del juego
+   ========================================================= */
+.item-card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.item-card:hover {
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 16px 40px rgba(197, 160, 89, 0.3);
+    border-color: var(--gold-accent);
+}
+
+.item-icon-wrap {
+    padding: 1.5rem 1.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-icon {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 2px solid rgba(197, 160, 89, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.item-card:hover .item-icon {
+    transform: scale(1.12) rotate(3deg);
+    box-shadow: 0 8px 28px rgba(197, 160, 89, 0.5);
+    border-color: var(--gold-accent);
+}
+
+.item-body {
+    padding: 0.75rem 0.5rem 1.25rem;
+}
+
+.item-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold-accent);
+    text-align: center;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* =========================================================
+   COMMUNITY — Fase 3: Publicaciones y Comentarios
+   ========================================================= */
+.community-post {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.community-post:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-color: rgba(197, 160, 89, 0.2);
+}
+
+.post-avatar {
+    width: 45px;
+    height: 45px;
+    min-width: 45px;
+    background: linear-gradient(135deg, rgba(197, 160, 89, 0.8), rgba(15, 23, 42, 1));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    border: 2px solid var(--gold-accent);
+}
+
+.post-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.post-body {
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.post-body img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.comment-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: var(--gold-accent);
+}
+
+.comment-content {
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.comment-item:hover .comment-content {
+    border-left-color: var(--gold-accent);
+}
+
+.ql-snow .ql-editor {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+}
+
+.ql-snow .ql-stroke {
+    stroke: #b9b9c3;
+}
+
+.ql-snow .ql-fill {
+    fill: #b9b9c3;
+}
+
+.ql-snow .ql-picker {
+    color: #b9b9c3;
+}
