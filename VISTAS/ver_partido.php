@@ -22,10 +22,12 @@ $es_hoy         = ($fecha_partido === $hoy);
 $ya_paso        = ($fecha_partido < $hoy);
 $desbloqueado   = ($fecha_partido <= $hoy); // hoy o pasado
 
-$equipo1  = htmlspecialchars($partido['equipo1']);
-$equipo2  = htmlspecialchars($partido['equipo2']);
-$logo1    = htmlspecialchars($partido['logo1'] ?? '');
-$logo2    = htmlspecialchars($partido['logo2'] ?? '');
+$equipo1     = htmlspecialchars($partido['equipo1']);
+$equipo2     = htmlspecialchars($partido['equipo2']);
+$logo1       = htmlspecialchars($partido['logo1'] ?? '');
+$logo2       = htmlspecialchars($partido['logo2'] ?? '');
+$id_equipo1  = intval($partido['id_equipo1'] ?? 0);
+$id_equipo2  = intval($partido['id_equipo2'] ?? 0);
 $fecha_fmt = date('d \d\e F \d\e Y', strtotime($fecha_partido));
 $res1     = $partido['res1'] ?? null;
 $res2     = $partido['res2'] ?? null;
@@ -43,7 +45,7 @@ $id_liga  = intval($partido['id_liga'] ?? 0);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.1">
+    <link rel="stylesheet" href="../CSS/style.css?v=1.7">
     <style>
         .match-hero {
             background: rgba(15,23,42,0.75);
@@ -163,7 +165,13 @@ $id_liga  = intval($partido['id_liga'] ?? 0);
                         <i class="fa-solid fa-shield-halved text-gold fs-2"></i>
                     </div>
                 <?php endif; ?>
-                <div class="team-name-lg"><?= $equipo1 ?></div>
+                <?php if ($id_equipo1): ?>
+                    <a href="/VISTAS/ver_equipo.php?id=<?= $id_equipo1 ?>" class="text-decoration-none">
+                        <div class="team-name-lg" style="transition:.2s" onmouseover="this.style.color='var(--gold-accent)'" onmouseout="this.style.color='#fff'"><?= $equipo1 ?></div>
+                    </a>
+                <?php else: ?>
+                    <div class="team-name-lg"><?= $equipo1 ?></div>
+                <?php endif; ?>
                 <?php if ($ya_paso && $res1 !== null): ?>
                     <div class="score-box mt-2"><?= intval($res1) ?></div>
                 <?php endif; ?>
@@ -190,7 +198,13 @@ $id_liga  = intval($partido['id_liga'] ?? 0);
                         <i class="fa-solid fa-shield-halved text-gold fs-2"></i>
                     </div>
                 <?php endif; ?>
-                <div class="team-name-lg"><?= $equipo2 ?></div>
+                <?php if ($id_equipo2): ?>
+                    <a href="/VISTAS/ver_equipo.php?id=<?= $id_equipo2 ?>" class="text-decoration-none">
+                        <div class="team-name-lg" style="transition:.2s" onmouseover="this.style.color='var(--gold-accent)'" onmouseout="this.style.color='#fff'"><?= $equipo2 ?></div>
+                    </a>
+                <?php else: ?>
+                    <div class="team-name-lg"><?= $equipo2 ?></div>
+                <?php endif; ?>
                 <?php if ($ya_paso && $res2 !== null): ?>
                     <div class="score-box mt-2"><?= intval($res2) ?></div>
                 <?php endif; ?>

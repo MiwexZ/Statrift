@@ -28,6 +28,15 @@
         include("../CONTROLADORES/generar_login.php");
         conectar::desconectar($conexion);
         ?>
+        <?php if (($_GET['registro'] ?? '') === 'ok'): ?>
+            <p class="text-center mt-2" style="color:#4ade80;font-size:.95rem;">
+                <i class="fa-solid fa-circle-check me-1"></i>Cuenta creada correctamente. Ya puedes iniciar sesión.
+            </p>
+        <?php endif; ?>
+        <p class="text-center mt-3" style="color:#C8A96E;">
+            ¿No tienes cuenta?
+            <a href="/VISTAS/registro.php" style="color:#C8A96E;font-weight:600;">Regístrate aquí</a>
+        </p>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"

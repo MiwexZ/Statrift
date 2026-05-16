@@ -3,14 +3,6 @@ class modelo_liga
 {
     private $_db;
 
-    // URLs oficiales del CDN de lolesports para ligas conocidas
-    private static array $logos_cdn = [
-        'LCK' => 'https://static.lolesports.com/leagues/LCK_Logo.png',
-        'LEC' => 'https://static.lolesports.com/leagues/LEC-Bug_FullonDark.png',
-        'LPL' => 'https://static.lolesports.com/leagues/LPL-Bug_FullonDark.png',
-        'LCS' => 'https://static.lolesports.com/leagues/LCS_Logo.png',
-    ];
-
     public function __construct()
     {
         $this->_db = conectar::conexion();
@@ -40,17 +32,12 @@ class modelo_liga
             $nombre = htmlspecialchars($fila['nombre'] ?? '');
             $id     = intval($fila['id']);
             // Prioridad: logo de BD (ya funciona para LCK/LEC) > CDN fallback cuando está vacío
-            $logo_bd  = trim($fila['logo'] ?? '');
-            $logo     = $logo_bd !== ''
-                ? htmlspecialchars($logo_bd)
-                : htmlspecialchars(self::$logos_cdn[$fila['nombre']] ?? '');
+            $logo   = htmlspecialchars(trim($fila['logo'] ?? ''));
             $delay  = ($i % 3) * 150;
 
-            // Si no hay ningún logo, mostrar icono FontAwesome en su lugar
             $img_html = $logo
-                ? "<img src='{$logo}' alt='{$nombre}' class='league-logo' loading='lazy'
-                        onerror=\"this.outerHTML='<i class=\\'fa-solid fa-trophy league-logo text-gold\\' style=\\'font-size:4rem\\'></i>';this.onerror=null\">"
-                : "<i class='fa-solid fa-trophy league-logo text-gold' style='font-size:4rem'></i>";
+                ? "<img src='{$logo}' alt='{$nombre}' class='league-logo' loading='lazy' onerror=\"this.style.display='none'\">"
+                : '';
 
             echo "
             <div class='col-12 col-md-4 col-lg-3 mb-4' data-aos='zoom-in' data-aos-delay='{$delay}'>

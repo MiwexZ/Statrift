@@ -735,4 +735,156 @@ div#navbarNav {
 
 .ql-snow .ql-picker {
     color: #b9b9c3;
+}
+
+/* =========================================================
+   TEAM CARDS — Tarjetas de equipos (v1.6)
+   ========================================================= */
+.team-card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.team-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(197, 160, 89, 0.3);
+    border-color: var(--gold-accent);
+}
+
+.team-card-logo-wrap {
+    background: rgba(10, 16, 32, 0.6);
+    padding: 1.5rem;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    overflow: hidden;
+}
+
+.team-card-logo {
+    max-width: 100%;
+    max-height: 110px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.5));
+    transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.team-card:hover .team-card-logo {
+    transform: scale(1.1);
+    filter: drop-shadow(0 8px 24px rgba(197,160,89,0.4));
+}
+
+.team-card-body {
+    padding: 1.5rem;
+}
+
+.team-card-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.4rem;
+}
+
+.team-rank-badge {
+    display: inline-block;
+    background: rgba(197,160,89,0.12);
+    border: 1px solid rgba(197,160,89,0.35);
+    color: var(--gold-accent);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: .2rem .75rem;
+    border-radius: 20px;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   DARK-THEME FIXES — Bootstrap 5.3 muted color overrides
+   Bootstrap usa --bs-secondary-color: rgba(33,37,41,.75)
+   (#212529BF) para .text-muted, ilegible sobre fondos oscuros.
+   ========================================================= */
+:root {
+    --bs-secondary-color: var(--text-muted);
+    --bs-body-color: var(--text-primary);
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* =========================================================
+   PARTIDOS WIDGET — Tabla semanal con glassmorphism
+   ========================================================= */
+.partidos-widget .table {
+    color: var(--text-primary);
+    background: transparent !important;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+}
+
+.partidos-widget .table thead th {
+    color: var(--gold-accent);
+    background: transparent !important;
+    border-bottom: 2px solid rgba(197,160,89,0.5);
+}
+
+/* Override Bootstrap table-dark solid bg */
+.partidos-widget .table > :not(caption) > * > * {
+    background-color: transparent !important;
+    color: var(--text-primary);
+    box-shadow: none;
+}
+
+/* Clickable rows — borde redondeado por celdas (tr no soporta border-radius) */
+.partido-row {
+    cursor: pointer;
+}
+
+.partido-row td {
+    border-top: 1px solid rgba(200, 169, 110, 0.25);
+    border-bottom: 1px solid rgba(200, 169, 110, 0.25);
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.partido-row td:first-child {
+    border-left: 1px solid rgba(200, 169, 110, 0.25);
+    border-radius: 10px 0 0 10px;
+}
+
+.partido-row td:last-child {
+    border-right: 1px solid rgba(200, 169, 110, 0.25);
+    border-radius: 0 10px 10px 0;
+}
+
+.partido-row:hover td {
+    background-color: rgba(200, 169, 110, 0.10) !important;
+    border-color: #C8A96E !important;
+}
+
+.partido-row:hover .text-gold,
+.partido-row:hover .text-light {
+    color: var(--gold-hover) !important;
+}
+
+/* =========================================================
+   VIDEO WRAPPER — Iframe 16:9 responsivo
+   ========================================================= */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(197,160,89,0.2);
+}
+.video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
 }

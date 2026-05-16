@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StatRift — Campeones</title>
-    <meta name="description" content="Explora el directorio completo de campeones de League of Legends en StatRift. Habilidades, roles y estadísticas.">
+    <title>StatRift — Equipos</title>
+    <meta name="description" content="Ranking de equipos profesionales de League of Legends en StatRift. T1, G2, Fnatic y más.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -18,17 +18,16 @@
     generar_header();
     ?>
 
-    <!-- Hero de sección -->
     <section class="page-hero text-center" data-aos="fade-down" data-aos-duration="800">
         <div class="container">
-            <div class="page-hero-icon"><i class="fa-solid fa-hat-wizard"></i></div>
-            <h1 class="page-hero-title">Campeones</h1>
-            <p class="page-hero-sub">Domina la Grieta conociendo a fondo cada campeón. Habilidades, roles y estrategias al detalle.</p>
+            <div class="page-hero-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h1 class="page-hero-title">Equipos</h1>
+            <p class="page-hero-sub">Los mejores equipos del mundo clasificados por ranking global. Conoce su roster, historia y sus mejores momentos.</p>
         </div>
     </section>
 
     <main class="container my-5">
-        <?php include "../CONTROLADORES/mostrar_todos_campeones.php"; ?>
+        <?php include "../CONTROLADORES/mostrar_todos_equipos.php"; ?>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

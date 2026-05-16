@@ -11,9 +11,12 @@ if (!isset($_SESSION['nick']) || $_SESSION['nick'] !== 'admin') {
 }
 
 $modelo = new modelo_admin();
-$stats = $modelo->get_stats();
+$stats         = $modelo->get_stats();
 $publicaciones = $modelo->get_publicaciones();
-$usuarios = $modelo->get_usuarios();
+$usuarios      = $modelo->get_usuarios();
+$campeones     = $modelo->get_campeones();
+$partidos      = $modelo->get_partidos();
+$equipos       = $modelo->get_equipos();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -24,7 +27,7 @@ $usuarios = $modelo->get_usuarios();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.3">
+    <link rel="stylesheet" href="../CSS/style.css?v=1.8">
     <style>
         .admin-sidebar {
             background: rgba(15, 23, 42, 0.8);
@@ -47,18 +50,19 @@ $usuarios = $modelo->get_usuarios();
             border-radius: 12px;
             padding: 1.5rem;
             text-align: center;
-            transition: transform 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
         }
-        .stat-card:hover { transform: translateY(-5px); }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(197,160,89,0.25);
+            border-color: rgba(197,160,89,0.7);
+        }
         .stat-number { font-size: 2.5rem; font-weight: bold; color: var(--gold-accent); }
     </style>
 </head>
 <body>
-    <?php
-    // Evitamos llamar a generar_header() aquí porque ya hemos iniciado sesión en este archivo,
-    // y generar_header() llama a session_start() de nuevo. Lo llamamos de forma segura:
-    if(session_status() === PHP_SESSION_NONE) session_start();
-    ?>
+    <?php if(session_status() === PHP_SESSION_NONE) session_start(); ?>
     <nav class='navbar navbar-expand-lg sticky-top'>
         <div class='container-fluid px-4'>
             <a class='navbar-brand' href='#'><i class='fa-solid fa-dragon'></i> StatRift Admin</a>
@@ -84,7 +88,7 @@ $usuarios = $modelo->get_usuarios();
                         <button class="nav-link w-100 text-start active" id="resumen-tab" data-bs-toggle="pill" data-bs-target="#resumen" type="button" role="tab"><i class="fa-solid fa-chart-pie me-2"></i> Dashboard</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link w-100 text-start" id="usuarios-tab" data-bs-toggle="pill" data-bs-target="#usuarios" type="button" role="tab"><i class="fa-solid fa-users me-2"></i> Jugadores</button>
+                        <button class="nav-link w-100 text-start" id="usuarios-tab" data-bs-toggle="pill" data-bs-target="#usuarios" type="button" role="tab"><i class="fa-solid fa-users me-2"></i> Usuarios</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link w-100 text-start" id="publicaciones-tab" data-bs-toggle="pill" data-bs-target="#publicaciones" type="button" role="tab"><i class="fa-solid fa-comments me-2"></i> Comunidad</button>
@@ -92,40 +96,43 @@ $usuarios = $modelo->get_usuarios();
                     <li class="nav-item" role="presentation">
                         <button class="nav-link w-100 text-start" id="campeones-tab" data-bs-toggle="pill" data-bs-target="#campeones" type="button" role="tab"><i class="fa-solid fa-mask me-2"></i> Campeones</button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link w-100 text-start" id="partidos-tab" data-bs-toggle="pill" data-bs-target="#partidos" type="button" role="tab"><i class="fa-solid fa-trophy me-2"></i> Partidos</button>
+                    </li>
                 </ul>
             </div>
 
             <!-- CONTENT -->
             <div class="col-md-9 col-lg-10 p-4">
                 <div class="tab-content" id="adminTabsContent">
-                    
+
                     <!-- TAB: DASHBOARD -->
                     <div class="tab-pane fade show active" id="resumen" role="tabpanel" tabindex="0">
                         <h3 class="text-gold mb-4">Resumen del Sistema</h3>
                         <div class="row">
                             <div class="col-md-3 mb-4">
-                                <div class="stat-card">
+                                <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('usuarios-tab')).show()">
                                     <i class="fa-solid fa-users fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['usuarios'] ?></div>
-                                    <div class="text-light">Jugadores</div>
+                                    <div class="text-light">Usuarios</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-4">
-                                <div class="stat-card">
+                                <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('publicaciones-tab')).show()">
                                     <i class="fa-solid fa-comments fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['publicaciones'] ?></div>
                                     <div class="text-light">Publicaciones</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-4">
-                                <div class="stat-card">
+                                <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('campeones-tab')).show()">
                                     <i class="fa-solid fa-mask fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['campeones'] ?></div>
                                     <div class="text-light">Campeones</div>
                                 </div>
                             </div>
                             <div class="col-md-3 mb-4">
-                                <div class="stat-card">
+                                <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('partidos-tab')).show()">
                                     <i class="fa-solid fa-trophy fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['partidos'] ?></div>
                                     <div class="text-light">Partidos</div>
@@ -136,7 +143,7 @@ $usuarios = $modelo->get_usuarios();
 
                     <!-- TAB: USUARIOS -->
                     <div class="tab-pane fade" id="usuarios" role="tabpanel" tabindex="0">
-                        <h3 class="text-gold mb-4">Gestión de Jugadores</h3>
+                        <h3 class="text-gold mb-4">Gestión de Usuarios</h3>
                         <div class="bg-glass p-4 rounded-4">
                             <table class="table table-dark table-hover align-middle">
                                 <thead>
@@ -200,8 +207,40 @@ $usuarios = $modelo->get_usuarios();
 
                     <!-- TAB: CAMPEONES -->
                     <div class="tab-pane fade" id="campeones" role="tabpanel" tabindex="0">
-                        <h3 class="text-gold mb-4">Añadir Nuevo Campeón</h3>
+                        <h3 class="text-gold mb-4">Gestión de Campeones</h3>
+
+                        <!-- Lista de campeones -->
+                        <div class="bg-glass p-4 rounded-4 mb-4">
+                            <h5 class="text-muted mb-3">Campeones registrados</h5>
+                            <table class="table table-dark table-hover align-middle">
+                                <thead>
+                                    <tr><th>ID</th><th>Nombre</th><th>Rol</th><th>Acciones</th></tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($campeones as $c): ?>
+                                    <tr>
+                                        <td><?= $c['id'] ?></td>
+                                        <td>
+                                            <?php if($c['foto']): ?>
+                                                <img src="<?= htmlspecialchars($c['foto']) ?>" alt="" style="width:32px;height:32px;object-fit:cover;border-radius:4px;margin-right:8px" onerror="this.style.display='none'">
+                                            <?php endif; ?>
+                                            <strong class="text-gold"><?= htmlspecialchars($c['nombre']) ?></strong>
+                                        </td>
+                                        <td><span class="badge bg-secondary"><?= htmlspecialchars($c['rol'] ?? '—') ?></span></td>
+                                        <td>
+                                            <button class="btn btn-outline-danger btn-sm btn-delete-champion" data-id="<?= $c['id'] ?>" data-nombre="<?= htmlspecialchars($c['nombre']) ?>">
+                                                <i class="fa-solid fa-trash"></i> Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Formulario añadir -->
                         <div class="bg-glass p-4 rounded-4" style="max-width: 600px;">
+                            <h5 class="text-muted mb-3">Añadir nuevo campeón</h5>
                             <form id="formAddChampion">
                                 <div class="mb-3">
                                     <label class="form-label text-muted">Nombre del Campeón</label>
@@ -234,6 +273,70 @@ $usuarios = $modelo->get_usuarios();
                         </div>
                     </div>
 
+                    <!-- TAB: PARTIDOS -->
+                    <div class="tab-pane fade" id="partidos" role="tabpanel" tabindex="0">
+                        <h3 class="text-gold mb-4">Gestión de Partidos</h3>
+
+                        <!-- Lista de partidos -->
+                        <div class="bg-glass p-4 rounded-4 mb-4">
+                            <h5 class="text-muted mb-3">Partidos registrados</h5>
+                            <?php if(empty($partidos)): ?>
+                                <p class="text-muted text-center py-3"><i class="fa-solid fa-calendar-xmark d-block fs-2 mb-2"></i>No hay partidos registrados.</p>
+                            <?php else: ?>
+                            <table class="table table-dark table-hover align-middle">
+                                <thead>
+                                    <tr><th>ID</th><th>Fecha</th><th>Equipo 1</th><th>Equipo 2</th><th>Acciones</th></tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($partidos as $pt): ?>
+                                    <tr>
+                                        <td><?= $pt['id'] ?></td>
+                                        <td><?= htmlspecialchars($pt['fecha']) ?></td>
+                                        <td><strong class="text-gold"><?= htmlspecialchars($pt['equipo1']) ?></strong></td>
+                                        <td><strong class="text-gold"><?= htmlspecialchars($pt['equipo2']) ?></strong></td>
+                                        <td>
+                                            <button class="btn btn-outline-danger btn-sm btn-delete-partido" data-id="<?= $pt['id'] ?>">
+                                                <i class="fa-solid fa-trash"></i> Eliminar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Formulario añadir partido -->
+                        <div class="bg-glass p-4 rounded-4" style="max-width: 540px;">
+                            <h5 class="text-muted mb-3">Añadir nuevo partido</h5>
+                            <form id="formAddPartido">
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Fecha del partido</label>
+                                    <input type="date" id="p_fecha" class="form-control bg-dark text-light border-secondary" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-muted">Equipo local</label>
+                                    <select id="p_equipo1" class="form-select bg-dark text-light border-secondary" required>
+                                        <option value="">— Seleccionar —</option>
+                                        <?php foreach($equipos as $eq): ?>
+                                        <option value="<?= $eq['id'] ?>"><?= htmlspecialchars($eq['nombre']) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label text-muted">Equipo visitante</label>
+                                    <select id="p_equipo2" class="form-select bg-dark text-light border-secondary" required>
+                                        <option value="">— Seleccionar —</option>
+                                        <?php foreach($equipos as $eq): ?>
+                                        <option value="<?= $eq['id'] ?>"><?= htmlspecialchars($eq['nombre']) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-gold w-100"><i class="fa-solid fa-plus me-2"></i>Crear Partido</button>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -246,15 +349,11 @@ $usuarios = $modelo->get_usuarios();
             btn.addEventListener('click', function() {
                 if(!confirm('¿Seguro que quieres borrar esta publicación y sus comentarios?')) return;
                 const id = this.getAttribute('data-id');
-                const formData = new FormData();
-                formData.append('accion', 'delete_post');
-                formData.append('id', id);
-
-                fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: formData })
-                .then(res => res.json()).then(data => {
-                    if(data.success) location.reload();
-                    else alert(data.error);
-                });
+                const fd = new FormData();
+                fd.append('accion', 'delete_post');
+                fd.append('id', id);
+                fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+                .then(r => r.json()).then(d => { if(d.success) location.reload(); else alert(d.error); });
             });
         });
 
@@ -263,15 +362,11 @@ $usuarios = $modelo->get_usuarios();
             btn.addEventListener('click', function() {
                 if(!confirm('¿Seguro que quieres expulsar a este usuario de StatRift?')) return;
                 const id = this.getAttribute('data-id');
-                const formData = new FormData();
-                formData.append('accion', 'delete_user');
-                formData.append('id', id);
-
-                fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: formData })
-                .then(res => res.json()).then(data => {
-                    if(data.success) location.reload();
-                    else alert(data.error);
-                });
+                const fd = new FormData();
+                fd.append('accion', 'delete_user');
+                fd.append('id', id);
+                fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+                .then(r => r.json()).then(d => { if(d.success) location.reload(); else alert(d.error); });
             });
         });
 
@@ -280,26 +375,69 @@ $usuarios = $modelo->get_usuarios();
             e.preventDefault();
             const btn = this.querySelector('button[type="submit"]');
             btn.disabled = true;
+            const fd = new FormData();
+            fd.append('accion', 'add_champion');
+            fd.append('nombre', document.getElementById('c_nombre').value);
+            fd.append('q', document.getElementById('c_q').value);
+            fd.append('w', document.getElementById('c_w').value);
+            fd.append('e', document.getElementById('c_e').value);
+            fd.append('r', document.getElementById('c_r').value);
+            fd.append('foto', document.getElementById('c_foto').value);
+            fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+            .then(r => r.json()).then(d => {
+                if(d.success) { alert('Campeón añadido con éxito.'); location.reload(); }
+                else { alert(d.error); btn.disabled = false; }
+            });
+        });
 
-            const formData = new FormData();
-            formData.append('accion', 'add_champion');
-            formData.append('nombre', document.getElementById('c_nombre').value);
-            formData.append('q', document.getElementById('c_q').value);
-            formData.append('w', document.getElementById('c_w').value);
-            formData.append('e', document.getElementById('c_e').value);
-            formData.append('r', document.getElementById('c_r').value);
-            formData.append('foto', document.getElementById('c_foto').value);
+        // Eliminar Campeón
+        document.querySelectorAll('.btn-delete-champion').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const nombre = this.getAttribute('data-nombre');
+                if(!confirm('¿Eliminar al campeón "' + nombre + '"? Esta acción no se puede deshacer.')) return;
+                const fd = new FormData();
+                fd.append('accion', 'delete_champion');
+                fd.append('id', this.getAttribute('data-id'));
+                fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+                .then(r => r.json()).then(d => {
+                    if(d.success) location.reload();
+                    else alert(d.error);
+                });
+            });
+        });
 
-            fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: formData })
-            .then(res => res.json()).then(data => {
-                if(data.success) {
-                    alert('Campeón añadido con éxito.');
-                    document.getElementById('formAddChampion').reset();
-                    btn.disabled = false;
-                } else {
-                    alert(data.error);
-                    btn.disabled = false;
-                }
+        // Añadir Partido
+        document.getElementById('formAddPartido').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const e1 = document.getElementById('p_equipo1').value;
+            const e2 = document.getElementById('p_equipo2').value;
+            if(e1 === e2) { alert('Los dos equipos no pueden ser el mismo.'); return; }
+            const btn = this.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            const fd = new FormData();
+            fd.append('accion', 'add_partido');
+            fd.append('fecha', document.getElementById('p_fecha').value);
+            fd.append('id_equipo1', e1);
+            fd.append('id_equipo2', e2);
+            fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+            .then(r => r.json()).then(d => {
+                if(d.success) { alert('Partido creado con éxito.'); location.reload(); }
+                else { alert(d.error); btn.disabled = false; }
+            });
+        });
+
+        // Eliminar Partido
+        document.querySelectorAll('.btn-delete-partido').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(!confirm('¿Eliminar este partido? Se borrarán también sus resultados.')) return;
+                const fd = new FormData();
+                fd.append('accion', 'delete_partido');
+                fd.append('id', this.getAttribute('data-id'));
+                fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+                .then(r => r.json()).then(d => {
+                    if(d.success) location.reload();
+                    else alert(d.error);
+                });
             });
         });
     </script>

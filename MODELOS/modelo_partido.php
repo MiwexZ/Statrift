@@ -13,7 +13,7 @@ class modelo_partido
         $fecha_fin    = date('Y-m-d', strtotime('sunday this week'));
 
         $stmt = $this->_db->prepare(
-            "SELECT p.fecha, e1.nombre AS equipo1, e2.nombre AS equipo2
+            "SELECT p.id AS id_partido, p.fecha, e1.nombre AS equipo1, e2.nombre AS equipo2
              FROM partido p
              JOIN juega j1 ON p.id = j1.id_partido
              JOIN equipo e1 ON j1.id_equipo = e1.id
@@ -27,9 +27,9 @@ class modelo_partido
         $resultado = $stmt->get_result();
 
         echo '<h2 class="section-title text-center mt-5 mb-4 d-block">Partidos de la Semana</h2>';
-        echo '<div class="table-responsive w-100 mx-auto p-4 rounded-4 bg-glass border-gold-subtle mb-5" style="max-width: 800px;">';
-        echo '<table class="table table-dark table-hover table-borderless align-middle text-center mb-0" style="background: transparent;">';
-        echo '<thead style="border-bottom: 2px solid rgba(197, 160, 89, 0.5); color: var(--gold-accent);">';
+        echo '<div class="table-responsive w-100 mx-auto p-4 rounded-4 bg-glass partidos-widget mb-5" style="max-width: 800px;">';
+        echo '<table class="table table-borderless align-middle text-center mb-0">';
+        echo '<thead>';
         echo '<tr>
                 <th style="width:1%;white-space:nowrap">Fecha</th>
                 <th class="text-end">Equipo 1</th>
@@ -41,10 +41,11 @@ class modelo_partido
 
         if ($resultado && $resultado->num_rows > 0) {
             while ($fila = $resultado->fetch_assoc()) {
-                $equipo1 = htmlspecialchars($fila['equipo1']);
-                $equipo2 = htmlspecialchars($fila['equipo2']);
-                $fecha   = date('d/m/Y', strtotime($fila['fecha']));
-                echo '<tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">';
+                $equipo1    = htmlspecialchars($fila['equipo1']);
+                $equipo2    = htmlspecialchars($fila['equipo2']);
+                $fecha      = date('d/m/Y', strtotime($fila['fecha']));
+                $id_partido = intval($fila['id_partido']);
+                echo '<tr class="partido-row" onclick="location.href=\'/VISTAS/ver_partido.php?id=' . $id_partido . '\'" title="Ver partido">';
                 echo '<td style="white-space:nowrap"><span class="text-gold small fw-bold"><i class="fa-regular fa-calendar-alt me-1"></i>' . $fecha . '</span></td>';
                 echo '<td class="text-end"><strong class="text-light">' . $equipo1 . '</strong></td>';
                 echo '<td class="px-2"><span class="badge bg-danger rounded-pill px-2 shadow-sm">VS</span></td>';
@@ -84,8 +85,8 @@ class modelo_partido
     {
         $stmt = $this->_db->prepare(
             "SELECT p.id, p.fecha,
-                    e1.nombre AS equipo1, e1.Logo AS logo1, e1.id_liga,
-                    e2.nombre AS equipo2, e2.Logo AS logo2,
+                    e1.id AS id_equipo1, e1.nombre AS equipo1, e1.Logo AS logo1, e1.id_liga,
+                    e2.id AS id_equipo2, e2.nombre AS equipo2, e2.Logo AS logo2,
                     j1.resultado AS res1, j2.resultado AS res2
              FROM partido p
              JOIN juega j1 ON p.id = j1.id_partido
