@@ -29,8 +29,9 @@ $logo2       = htmlspecialchars($partido['logo2'] ?? '');
 $id_equipo1  = intval($partido['id_equipo1'] ?? 0);
 $id_equipo2  = intval($partido['id_equipo2'] ?? 0);
 $fecha_fmt = date('d \d\e F \d\e Y', strtotime($fecha_partido));
-$res1     = $partido['res1'] ?? null;
-$res2     = $partido['res2'] ?? null;
+$res1       = $partido['res1'] ?? null;
+$res2       = $partido['res2'] ?? null;
+$stream_url = $partido['stream_url'] ?? '';
 
 $titulo   = "{$equipo1} vs {$equipo2}";
 $liga_nombre = htmlspecialchars($liga['nombre'] ?? 'Liga');
@@ -229,10 +230,22 @@ $id_liga  = intval($partido['id_liga'] ?? 0);
             <i class="fa-solid fa-play-circle me-2"></i>Reproducción del partido
         </h5>
 
+        <?php if ($es_hoy && $stream_url): ?>
+            <div class="ratio ratio-16x9 mb-3">
+                <iframe
+                    src="<?= htmlspecialchars($stream_url) ?>"
+                    allowfullscreen
+                    scrolling="no"
+                    frameborder="0"
+                    allow="autoplay; fullscreen">
+                </iframe>
+            </div>
+            <p class="text-center" style="color:#C8A96E;">
+                <i class="fas fa-circle text-danger"></i> Partido en directo
+            </p>
+        <?php else: ?>
         <div class="player-wrap">
             <?php if ($desbloqueado): ?>
-                <!-- Cuando llegue el día, aquí iría el iframe del stream real -->
-                <!-- Por ejemplo: <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe> -->
                 <div class="player-locked" style="background:rgba(10,12,22,0.75)">
                     <i class="fa-solid fa-film lock-icon" style="color:#94a3b8"></i>
                     <p class="lock-msg text-muted">
@@ -250,6 +263,7 @@ $id_liga  = intval($partido['id_liga'] ?? 0);
                 </div>
             <?php endif; ?>
         </div>
+        <?php endif; ?>
     </div>
 
     <!-- Botón volver -->

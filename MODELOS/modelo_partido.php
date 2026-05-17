@@ -84,7 +84,7 @@ class modelo_partido
     public function get_partido_detalle(int $id_partido): ?array
     {
         $stmt = $this->_db->prepare(
-            "SELECT p.id, p.fecha,
+            "SELECT p.id, p.fecha, p.stream_url,
                     e1.id AS id_equipo1, e1.nombre AS equipo1, e1.Logo AS logo1, e1.id_liga,
                     e2.id AS id_equipo2, e2.nombre AS equipo2, e2.Logo AS logo2,
                     j1.resultado AS res1, j2.resultado AS res2
