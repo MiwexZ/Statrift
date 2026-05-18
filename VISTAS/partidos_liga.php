@@ -28,7 +28,7 @@ $nombre_liga = htmlspecialchars($liga['nombre'] ?? '');
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.7">
+    <link rel="stylesheet" href="../CSS/style.css?v=2.0">
     <style>
         .match-row {
             background: rgba(15,23,42,0.6);
@@ -95,36 +95,38 @@ $nombre_liga = htmlspecialchars($liga['nombre'] ?? '');
         ?>
         <a href="/VISTAS/ver_partido.php?id=<?= $id_partido ?>" class="text-decoration-none"
            data-aos="fade-up" data-aos-delay="<?= $delay ?>">
-            <div class="match-row d-flex align-items-center justify-content-between px-4 py-3 gap-3">
+            <div class="match-row d-flex flex-column flex-md-row align-items-center justify-content-md-between px-3 px-md-4 py-3 gap-2 gap-md-3">
 
                 <!-- Fecha -->
                 <span class="match-date-pill flex-shrink-0">
                     <i class="fa-regular fa-calendar me-1"></i><?= $fecha_fmt ?>
                 </span>
 
-                <!-- Equipo 1 -->
-                <div class="d-flex align-items-center gap-2 justify-content-end flex-grow-1">
-                    <span class="fw-bold text-light text-end"><?= $equipo1 ?></span>
-                    <?php if ($logo1): ?>
-                        <img src="<?= $logo1 ?>" alt="<?= $equipo1 ?>" class="team-logo"
-                             onerror="this.style.display='none'">
-                    <?php endif; ?>
+                <!-- Bloque enfrentamiento -->
+                <div class="d-flex align-items-center justify-content-center gap-2 gap-md-3 flex-grow-1 w-100" style="min-width:0">
+                    <!-- Equipo 1 -->
+                    <div class="d-flex align-items-center gap-2 justify-content-end flex-grow-1" style="min-width:0">
+                        <span class="fw-bold text-light text-end text-truncate"><?= $equipo1 ?></span>
+                        <?php if ($logo1): ?>
+                            <img src="<?= $logo1 ?>" alt="<?= $equipo1 ?>" class="team-logo flex-shrink-0"
+                                 onerror="this.style.display='none'">
+                        <?php endif; ?>
+                    </div>
+
+                    <span class="vs-badge flex-shrink-0">VS</span>
+
+                    <!-- Equipo 2 -->
+                    <div class="d-flex align-items-center gap-2 flex-grow-1" style="min-width:0">
+                        <?php if ($logo2): ?>
+                            <img src="<?= $logo2 ?>" alt="<?= $equipo2 ?>" class="team-logo flex-shrink-0"
+                                 onerror="this.style.display='none'">
+                        <?php endif; ?>
+                        <span class="fw-bold text-light text-truncate"><?= $equipo2 ?></span>
+                    </div>
                 </div>
 
-                <!-- VS -->
-                <span class="vs-badge flex-shrink-0">VS</span>
-
-                <!-- Equipo 2 -->
-                <div class="d-flex align-items-center gap-2 flex-grow-1">
-                    <?php if ($logo2): ?>
-                        <img src="<?= $logo2 ?>" alt="<?= $equipo2 ?>" class="team-logo"
-                             onerror="this.style.display='none'">
-                    <?php endif; ?>
-                    <span class="fw-bold text-light"><?= $equipo2 ?></span>
-                </div>
-
-                <!-- Flecha -->
-                <i class="fa-solid fa-chevron-right text-muted flex-shrink-0"></i>
+                <!-- Flecha (oculta en xs) -->
+                <i class="fa-solid fa-chevron-right text-muted flex-shrink-0 d-none d-md-inline"></i>
             </div>
         </a>
         <?php endforeach; ?>

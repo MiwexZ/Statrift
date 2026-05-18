@@ -18,7 +18,7 @@ $modeloComunidad = new modelo_publicacion();
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <!-- Quill Editor CSS -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.7">
+    <link rel="stylesheet" href="../CSS/style.css?v=2.0">
 </head>
 <body>
     <?php generar_header(); ?>

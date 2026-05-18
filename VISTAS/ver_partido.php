@@ -46,7 +46,7 @@ $id_liga  = intval($partido['id_liga'] ?? 0);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.7">
+    <link rel="stylesheet" href="../CSS/style.css?v=2.0">
     <style>
         .match-hero {
             background: rgba(15,23,42,0.75);
@@ -110,6 +110,16 @@ $id_liga  = intval($partido['id_liga'] ?? 0);
         .badge-estado {
             font-size: .78rem; padding: .4rem 1rem;
             border-radius: 20px; font-weight: 600;
+        }
+
+        @media (max-width: 575.98px) {
+            .match-hero { padding: 1.25rem; border-radius: 14px; }
+            .team-logo-lg { width: 64px; height: 64px; }
+            .team-name-lg { font-size: 1rem; }
+            .vs-central { font-size: 1.3rem; padding: 0 .5rem; letter-spacing: 2px; }
+            .score-box { font-size: 1.8rem; }
+            .lock-icon { font-size: 2.5rem; }
+            .lock-msg { font-size: .95rem; }
         }
     </style>
 </head>

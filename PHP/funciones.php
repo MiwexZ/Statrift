@@ -50,7 +50,7 @@ function generar_nombre_unico($extension) {
                             <a class='nav-link' href='/VISTAS/ligas.php'>Ligas</a>
                         </li>
                         <li class='nav-item'>
-                            <a class='nav-link text-gold' href='/VISTAS/comunidad.php'><i class='fa-solid fa-users'></i> Comunidad</a>
+                            <a class='nav-link text-gold' href='/VISTAS/comunidad.php'>Comunidad</a>
                         </li>
                         <li class='nav-item dropdown'>
                             <a class='nav-link text-danger fw-bold dropdown-toggle' href='#' id='navbarAdminDropdown' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
@@ -63,11 +63,6 @@ function generar_nombre_unico($extension) {
                             </ul>
                         </li>
                     </ul>
-                    <!-- barra de búsqueda -->
-                    <form class='d-flex ms-auto my-2 my-lg-0'>
-                        <input class='form-control me-sm-2' type='search' placeholder='Buscar...' aria-label='Search'>
-                        <button class='btn btn-outline-success my-2 my-sm-0' type='submit'><i class='fa-solid fa-search'></i></button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -96,11 +91,11 @@ function generar_nombre_unico($extension) {
                             <a class='nav-link' href='/VISTAS/ligas.php'>Ligas</a>
                         </li>
                         <li class='nav-item'>
-                            <a class='nav-link text-gold' href='/VISTAS/comunidad.php'><i class='fa-solid fa-users'></i> Comunidad</a>
+                            <a class='nav-link text-gold' href='/VISTAS/comunidad.php'>Comunidad</a>
                         </li>
                         <li class='nav-item dropdown'>
                             <a class='nav-link text-gold dropdown-toggle' href='#' id='navbarDropdown' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                                <i class='fa-solid fa-user me-1'></i> ".$_SESSION['nick']."
+                                ".$_SESSION['nick']."
                             </a>
                             <ul class='dropdown-menu dropdown-menu-dark border-secondary' aria-labelledby='navbarDropdown'>
                                 <li><a class='dropdown-item' href='/VISTAS/perfil.php'><i class='fa-solid fa-id-card me-2'></i>Mi Perfil</a></li>
@@ -109,11 +104,6 @@ function generar_nombre_unico($extension) {
                             </ul>
                         </li>
                     </ul>
-                    <!-- barra de búsqueda -->
-                    <form class='d-flex ms-auto my-2 my-lg-0'>
-                        <input class='form-control me-sm-2' type='search' placeholder='Buscar...' aria-label='Search'>
-                        <button class='btn btn-outline-success my-2 my-sm-0' type='submit'><i class='fa-solid fa-search'></i></button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -143,20 +133,15 @@ function generar_nombre_unico($extension) {
                         <a class='nav-link' href='/VISTAS/ligas.php'>Ligas</a>
                     </li>
                     <li class='nav-item'>
-                        <a class='nav-link text-gold' href='/VISTAS/comunidad.php'><i class='fa-solid fa-users'></i> Comunidad</a>
+                        <a class='nav-link text-gold' href='/VISTAS/comunidad.php'>Comunidad</a>
                     </li>
                     <li class='nav-item'>
-                        <a class='nav-link text-gold' href='/VISTAS/login.php'><i class='fa-solid fa-user'></i> Acceso</a>
+                        <a class='nav-link text-gold' href='/VISTAS/login.php'>Acceso</a>
                     </li>
                     <li class='nav-item ms-1'>
                         <a href='/VISTAS/registro.php' class='btn btn-outline-warning btn-sm my-2 my-lg-0'>Registrarse</a>
                     </li>
                 </ul>
-                <!-- barra de búsqueda -->
-                <form class='d-flex ms-auto my-2 my-lg-0'>
-                    <input class='form-control me-sm-2' type='search' placeholder='Buscar...' aria-label='Search'>
-                    <button class='btn btn-outline-success my-2 my-sm-0' type='submit'><i class='fa-solid fa-search'></i></button>
-                </form>
             </div>
         </div>
     </nav>

@@ -32,7 +32,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.9">
+    <link rel="stylesheet" href="../CSS/style.css?v=2.0">
     <style>
         .admin-sidebar {
             background: rgba(15, 23, 42, 0.8);
@@ -71,9 +71,13 @@ $runas_camino  = $modelo->get_runas_por_camino();
 <body>
     <?php if(session_status() === PHP_SESSION_NONE) session_start(); ?>
     <nav class='navbar navbar-expand-lg sticky-top'>
-        <div class='container-fluid px-4'>
+        <div class='container-fluid px-3 px-md-4'>
             <a class='navbar-brand' href='#'><i class='fa-solid fa-dragon'></i> StatRift Admin</a>
-            <div class='collapse navbar-collapse'>
+            <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarAdmin'
+                aria-controls='navbarAdmin' aria-expanded='false' aria-label='Toggle navigation'>
+                <span class='navbar-toggler-icon'></span>
+            </button>
+            <div class='collapse navbar-collapse' id='navbarAdmin'>
                 <ul class='navbar-nav ms-auto'>
                     <li class='nav-item'>
                         <a class='nav-link' href='/index.php'><i class='fa-solid fa-house me-1'></i> Volver a la Web</a>
@@ -113,42 +117,42 @@ $runas_camino  = $modelo->get_runas_por_camino();
             </div>
 
             <!-- CONTENT -->
-            <div class="col-md-9 col-lg-10 p-4">
+            <div class="col-md-9 col-lg-10 p-3 p-md-4">
                 <div class="tab-content" id="adminTabsContent">
 
                     <!-- TAB: DASHBOARD -->
                     <div class="tab-pane fade show active" id="resumen" role="tabpanel" tabindex="0">
                         <h3 class="text-gold mb-4">Resumen del Sistema</h3>
                         <div class="row">
-                            <div class="col-md-2 col-sm-4 mb-4">
+                            <div class="col-6 col-sm-4 col-md-2 mb-4">
                                 <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('usuarios-tab')).show()">
                                     <i class="fa-solid fa-users fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['usuarios'] ?></div>
                                     <div class="text-light">Usuarios</div>
                                 </div>
                             </div>
-                            <div class="col-md-2 col-sm-4 mb-4">
+                            <div class="col-6 col-sm-4 col-md-2 mb-4">
                                 <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('publicaciones-tab')).show()">
                                     <i class="fa-solid fa-comments fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['publicaciones'] ?></div>
                                     <div class="text-light">Publicaciones</div>
                                 </div>
                             </div>
-                            <div class="col-md-2 col-sm-4 mb-4">
+                            <div class="col-6 col-sm-4 col-md-2 mb-4">
                                 <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('campeones-tab')).show()">
                                     <i class="fa-solid fa-mask fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['campeones'] ?></div>
                                     <div class="text-light">Campeones</div>
                                 </div>
                             </div>
-                            <div class="col-md-2 col-sm-4 mb-4">
+                            <div class="col-6 col-sm-4 col-md-2 mb-4">
                                 <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('equipos-tab')).show()">
                                     <i class="fa-solid fa-shield-halved fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['equipos'] ?></div>
                                     <div class="text-light">Equipos</div>
                                 </div>
                             </div>
-                            <div class="col-md-2 col-sm-4 mb-4">
+                            <div class="col-6 col-sm-4 col-md-2 mb-4">
                                 <div class="stat-card" onclick="bootstrap.Tab.getOrCreateInstance(document.getElementById('partidos-tab')).show()">
                                     <i class="fa-solid fa-trophy fs-2 text-muted mb-2"></i>
                                     <div class="stat-number"><?= $stats['partidos'] ?></div>
@@ -163,10 +167,11 @@ $runas_camino  = $modelo->get_runas_por_camino();
                         <h3 class="text-gold mb-4">Gestión de Usuarios</h3>
                         <div id="alerta-usuarios" class="alert mt-2" style="display:none;"></div>
                         <div class="bg-glass p-4 rounded-4">
-                            <table class="table table-dark table-hover align-middle">
+                            <div class="table-responsive">
+                            <table class="table tabla-admin table-dark table-hover align-middle">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Nick</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Acciones</th>
+                                        <th>ID</th><th>Nick</th><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -184,7 +189,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                                 <span class="badge bg-danger">Inactivo</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td>
+                                        <td class="acciones text-center text-nowrap">
                                             <?php if($u['nick'] !== 'admin'): ?>
                                             <button class="btn btn-outline-danger btn-sm btn-delete-user" data-id="<?= $u['id'] ?>"><i class="fa-solid fa-trash"></i> Eliminar</button>
                                             <?php endif; ?>
@@ -193,6 +198,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                     <?php endwhile; ?>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
 
@@ -201,10 +207,11 @@ $runas_camino  = $modelo->get_runas_por_camino();
                         <h3 class="text-gold mb-4">Moderación de Comunidad</h3>
                         <div id="alerta-publicaciones" class="alert mt-2" style="display:none;"></div>
                         <div class="bg-glass p-4 rounded-4">
-                            <table class="table table-dark table-hover align-middle">
+                            <div class="table-responsive">
+                            <table class="table tabla-admin table-dark table-hover align-middle">
                                 <thead>
                                     <tr>
-                                        <th>ID</th><th>Autor</th><th>Título</th><th>Fecha</th><th>Acciones</th>
+                                        <th>ID</th><th>Autor</th><th>Título</th><th>Fecha</th><th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -214,13 +221,14 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                         <td><strong class="text-gold"><?= htmlspecialchars($p['nick'] ?? 'Desconocido') ?></strong></td>
                                         <td><?= htmlspecialchars($p['titulo']) ?></td>
                                         <td><?= $p['fecha'] ?></td>
-                                        <td>
+                                        <td class="acciones text-center text-nowrap">
                                             <button class="btn btn-outline-danger btn-sm btn-delete-post" data-id="<?= $p['id'] ?>"><i class="fa-solid fa-trash"></i> Borrar</button>
                                         </td>
                                     </tr>
                                     <?php endwhile; ?>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     </div>
 
@@ -232,6 +240,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                         <!-- Lista -->
                         <div class="bg-glass p-4 rounded-4 mb-4">
                             <h5 class="text-muted mb-3">Campeones registrados</h5>
+                            <div class="table-responsive">
                             <table class="table tabla-admin table-dark table-hover align-middle">
                                 <thead>
                                     <tr><th>ID</th><th>Nombre</th><th>Rol</th><th class="text-center">Acciones</th></tr>
@@ -255,6 +264,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            </div>
                         </div>
 
                         <!-- Formulario añadir -->
@@ -285,10 +295,10 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                     <textarea id="c_descripcion" class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Análisis técnico del campeón..."></textarea>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6 mb-3"><label class="form-label text-muted">Habilidad Q</label><input type="text" id="c_q" class="form-control bg-dark text-light border-secondary"></div>
-                                    <div class="col-6 mb-3"><label class="form-label text-muted">Habilidad W</label><input type="text" id="c_w" class="form-control bg-dark text-light border-secondary"></div>
-                                    <div class="col-6 mb-3"><label class="form-label text-muted">Habilidad E</label><input type="text" id="c_e" class="form-control bg-dark text-light border-secondary"></div>
-                                    <div class="col-6 mb-3"><label class="form-label text-muted">Habilidad R (Ultimate)</label><input type="text" id="c_r" class="form-control bg-dark text-light border-secondary"></div>
+                                    <div class="col-12 col-sm-6 mb-3"><label class="form-label text-muted">Habilidad Q</label><input type="text" id="c_q" class="form-control bg-dark text-light border-secondary"></div>
+                                    <div class="col-12 col-sm-6 mb-3"><label class="form-label text-muted">Habilidad W</label><input type="text" id="c_w" class="form-control bg-dark text-light border-secondary"></div>
+                                    <div class="col-12 col-sm-6 mb-3"><label class="form-label text-muted">Habilidad E</label><input type="text" id="c_e" class="form-control bg-dark text-light border-secondary"></div>
+                                    <div class="col-12 col-sm-6 mb-3"><label class="form-label text-muted">Habilidad R (Ultimate)</label><input type="text" id="c_r" class="form-control bg-dark text-light border-secondary"></div>
                                 </div>
 
                                 <!-- Build opcional -->
@@ -305,15 +315,15 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                             <input type="text" id="b_nombre" class="form-control bg-dark text-light border-secondary form-control-sm" placeholder="Ej: Asesino Burst">
                                         </div>
                                         <div class="row g-2 mb-2">
-                                            <div class="col-4"><label class="form-label text-muted small">Popularidad (%)</label><input type="number" id="b_popularidad" class="form-control bg-dark text-light border-secondary form-control-sm" value="80" min="0" max="100"></div>
-                                            <div class="col-4"><label class="form-label text-muted small">Win Rate (%)</label><input type="number" id="b_winrate" class="form-control bg-dark text-light border-secondary form-control-sm" value="50.0" step="0.1" min="0" max="100"></div>
-                                            <div class="col-4"><label class="form-label text-muted small">Total partidas</label><input type="number" id="b_matches" class="form-control bg-dark text-light border-secondary form-control-sm" value="10000" min="0"></div>
+                                            <div class="col-12 col-sm-4"><label class="form-label text-muted small">Popularidad (%)</label><input type="number" id="b_popularidad" class="form-control bg-dark text-light border-secondary form-control-sm" value="80" min="0" max="100"></div>
+                                            <div class="col-12 col-sm-4"><label class="form-label text-muted small">Win Rate (%)</label><input type="number" id="b_winrate" class="form-control bg-dark text-light border-secondary form-control-sm" value="50.0" step="0.1" min="0" max="100"></div>
+                                            <div class="col-12 col-sm-4"><label class="form-label text-muted small">Total partidas</label><input type="number" id="b_matches" class="form-control bg-dark text-light border-secondary form-control-sm" value="10000" min="0"></div>
                                         </div>
                                         <h6 class="text-gold mb-2">Objetos (hasta 6)</h6>
                                         <?php for($slot = 1; $slot <= 6; $slot++): ?>
                                         <div class="row g-2 mb-2 align-items-center">
-                                            <div class="col-1 text-muted small text-center"><?= $slot ?></div>
-                                            <div class="col-5">
+                                            <div class="col-2 col-sm-1 text-muted small text-center fw-bold">#<?= $slot ?></div>
+                                            <div class="col-10 col-sm-5">
                                                 <select name="obj_id[]" class="form-select bg-dark text-light border-secondary form-select-sm">
                                                     <option value="">— Objeto —</option>
                                                     <?php foreach($objetos_admin as $obj): ?>
@@ -321,7 +331,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
-                                            <div class="col-3">
+                                            <div class="col-7 col-sm-3">
                                                 <select name="obj_fase[]" class="form-select bg-dark text-light border-secondary form-select-sm">
                                                     <option value="starter">Starter</option>
                                                     <option value="early">Early</option>
@@ -329,8 +339,8 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                                     <option value="full">Full</option>
                                                 </select>
                                             </div>
-                                            <div class="col-3">
-                                                <input type="number" name="obj_orden[]" value="<?= $slot ?>" min="1" max="6" class="form-control bg-dark text-light border-secondary form-control-sm">
+                                            <div class="col-5 col-sm-3">
+                                                <input type="number" name="obj_orden[]" value="<?= $slot ?>" min="1" max="6" class="form-control bg-dark text-light border-secondary form-control-sm" aria-label="Orden">
                                             </div>
                                         </div>
                                         <?php endfor; ?>
@@ -357,6 +367,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                             <?php if(empty($todos_equipos)): ?>
                                 <p class="text-muted text-center py-3"><i class="fa-solid fa-shield-halved d-block fs-2 mb-2"></i>No hay equipos registrados.</p>
                             <?php else: ?>
+                            <div class="table-responsive">
                             <table class="table tabla-admin table-dark table-hover align-middle">
                                 <thead>
                                     <tr><th>ID</th><th>Nombre</th><th>Liga</th><th>Ranking GPR</th><th class="text-center">Acciones</th></tr>
@@ -376,6 +387,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            </div>
                             <?php endif; ?>
                         </div>
 
@@ -422,7 +434,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                 <div class="collapse" id="colapseRoster">
                                     <div class="border border-secondary rounded-3 p-3 mb-3">
                                         <p class="text-muted small mb-3">Si nombre y nick están vacíos, esa posición no se inserta.</p>
-                                        <?php foreach(['Top','Jungla','Mid','ADC','Support','Coach'] as $pos): ?>
+                                        <?php foreach(['Top','Jungla','Mid','ADC','Support'] as $pos): ?>
                                         <div class="roster-row d-flex align-items-center gap-2 mb-2">
                                             <span class="roster-pos-label"><?= $pos ?></span>
                                             <input type="text" id="eq_r_nombre_<?= $pos ?>" class="form-control bg-dark text-light border-secondary form-control-sm" placeholder="Nombre real">
@@ -448,6 +460,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                             <?php if(empty($partidos)): ?>
                                 <p class="text-muted text-center py-3"><i class="fa-solid fa-calendar-xmark d-block fs-2 mb-2"></i>No hay partidos registrados.</p>
                             <?php else: ?>
+                            <div class="table-responsive">
                             <table class="table tabla-admin table-dark table-hover align-middle">
                                 <thead>
                                     <tr><th>ID</th><th>Fecha</th><th>Equipo 1</th><th>Equipo 2</th><th class="text-center">Acciones</th></tr>
@@ -467,6 +480,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                                     <?php endforeach; ?>
                                 </tbody>
                             </table>
+                            </div>
                             <?php endif; ?>
                         </div>
 
@@ -511,7 +525,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
 
     <!-- MODAL DE EDICIÓN -->
     <div class="modal fade" id="modalEditar" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-fullscreen-sm-down">
             <div class="modal-content bg-dark border border-secondary">
                 <div class="modal-header border-secondary">
                     <h5 class="modal-title text-gold" id="modalEditarTitle">Editar</h5>
@@ -992,7 +1006,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
             fd.append('descripcion', document.getElementById('eq_descripcion').value.trim());
             fd.append('ranking',     document.getElementById('eq_ranking').value || 0);
             fd.append('video',       document.getElementById('eq_video').value.trim());
-            ['Top','Jungla','Mid','ADC','Support','Coach'].forEach(function(pos) {
+            ['Top','Jungla','Mid','ADC','Support'].forEach(function(pos) {
                 const n = document.getElementById('eq_r_nombre_' + pos);
                 const k = document.getElementById('eq_r_nick_' + pos);
                 if (n && k && n.value.trim() && k.value.trim()) {
@@ -1040,7 +1054,7 @@ $runas_camino  = $modelo->get_runas_por_camino();
                         return '<option value="' + l.id + '"' + (eq.id_liga == l.id ? ' selected' : '') + '>' + esc(l.nombre) + '</option>';
                     }).join('');
                     const roster = eq.roster || {};
-                    const posiciones = ['Top','Jungla','Mid','ADC','Support','Coach'];
+                    const posiciones = ['Top','Jungla','Mid','ADC','Support'];
                     let rosterHtml = '<hr class="border-secondary my-3"><h6 class="text-gold mb-3"><i class="fa-solid fa-users me-2"></i>Roster del equipo</h6>' +
                         '<p class="text-muted small mb-3">Si nombre y nick están vacíos, esa posición se desactiva (no se elimina).</p>';
                     posiciones.forEach(function(pos) {
@@ -1050,7 +1064,6 @@ $runas_camino  = $modelo->get_runas_por_camino();
                             '<span class="roster-pos-label">' + pos + '</span>' +
                             '<input type="text" name="roster_nombre_' + pos + '" class="form-control bg-dark text-light border-secondary form-control-sm" placeholder="Nombre real" style="flex:1;min-width:140px" value="' + esc(r.nombre || '') + '">' +
                             '<input type="text" name="roster_nick_' + pos + '" class="form-control bg-dark text-light border-secondary form-control-sm" placeholder="Nick" style="flex:1;min-width:120px" value="' + esc(r.nick || '') + '">' +
-                            '<input type="text" name="roster_foto_url_' + pos + '" class="form-control bg-dark text-light border-secondary form-control-sm" placeholder="Foto URL" style="flex:2;min-width:200px" value="' + esc(r.foto_url || '') + '">' +
                             '</div>';
                     });
 
@@ -1209,8 +1222,8 @@ $runas_camino  = $modelo->get_runas_por_camino();
                 fd.append('descripcion', document.getElementById('edit_descripcion').value);
                 fd.append('ranking',     document.getElementById('edit_ranking').value || 0);
                 fd.append('video',       document.getElementById('edit_video').value);
-                ['Top','Jungla','Mid','ADC','Support','Coach'].forEach(function(pos) {
-                    ['id','nombre','nick','foto_url'].forEach(function(campo) {
+                ['Top','Jungla','Mid','ADC','Support'].forEach(function(pos) {
+                    ['id','nombre','nick'].forEach(function(campo) {
                         const inp = document.querySelector('[name="roster_' + campo + '_' + pos + '"]');
                         fd.append('roster_' + campo + '_' + pos, inp ? inp.value : '');
                     });

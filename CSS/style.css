@@ -600,6 +600,77 @@ div#navbarNav {
     .hero-title      { font-size: 2.8rem; }
     .champion-img-wrap { height: 160px; }
     .league-logo       { height: 90px; }
+
+    /* Navbar: reducir padding lateral en móvil */
+    .navbar { padding: 0.6rem 0.75rem; }
+    .navbar-brand { font-size: 1.2rem; letter-spacing: 1px; }
+    .navbar-nav .nav-link { margin: 0 0; }
+
+    /* Hero principal: reducir padding y márgenes */
+    .hero-section { padding: 3rem 1rem; margin-bottom: 1.5rem; }
+    .hero-subtitle { font-size: 1rem; }
+
+    /* Page-hero secciones interiores */
+    .page-hero { padding: 2.5rem 0.75rem 2rem; }
+    .page-hero-icon { font-size: 2.2rem; }
+    .page-hero-sub { font-size: 0.95rem; }
+
+    /* Section titles */
+    .section-title { font-size: 1.5rem; margin: 2rem 0 1.25rem; }
+
+    /* Cards */
+    .card-img-top { height: 160px; }
+    .player-card { padding: 1.25rem 1rem; }
+    .player-avatar { width: 60px; height: 60px; font-size: 1.4rem; }
+
+    /* Champion cards más pequeñas en móvil */
+    .champion-body { padding: 1rem; }
+    .champion-name { font-size: 1.05rem; }
+
+    /* Reducir margenes globales en main */
+    main.container.my-5 { margin-top: 1.5rem !important; margin-bottom: 2rem !important; }
+
+    /* Admin sidebar: que no ocupe pantalla completa en xs */
+    .admin-sidebar { min-height: auto !important; }
+
+    /* Runas (build.php): iconos escalados y wrap seguro en móvil */
+    .rune-slot, .secondary-slot { flex-wrap: wrap; }
+    .rune-bubble            { width: 50px; height: 50px; flex-shrink: 0; }
+    .rune-bubble img        { width: 36px; height: 36px; }
+    .rune-bubble.keystone   { width: 60px; height: 60px; }
+    .rune-bubble.keystone img { width: 48px; height: 48px; }
+    .rune-bubble-sm         { width: 42px; height: 42px; flex-shrink: 0; }
+    .rune-bubble-sm img     { width: 30px; height: 30px; }
+    .rune-path-icon         { width: 32px; height: 32px; }
+}
+
+/* Pantallas extra pequeñas (smartphones 375-430px) */
+@media (max-width: 575.98px) {
+    .hero-title      { font-size: 2.1rem; }
+    .page-hero-title { font-size: 1.85rem; }
+    .hero-section    { padding: 2.5rem 0.75rem; border-radius: 12px; }
+    .page-hero       { padding: 2rem 0.5rem 1.5rem; }
+    .section-title   { font-size: 1.3rem; }
+
+    /* Bg-glass: padding interior más compacto */
+    .bg-glass         { border-radius: 10px; }
+
+    /* Community posts: avatares más pequeños */
+    .post-avatar     { width: 38px; height: 38px; font-size: 1rem; }
+    .post-title      { font-size: 1.15rem; }
+    .post-body       { font-size: 0.95rem; }
+
+    /* Team cards: logos algo menores */
+    .team-card-logo-wrap { height: 130px; padding: 1rem; }
+    .team-card-logo      { max-height: 90px; }
+    .team-card-body      { padding: 1rem; }
+    .league-logo-wrap    { height: 140px; padding: 1rem; }
+
+    /* Modal: padding interior reducido */
+    .modal-body, .modal-header, .modal-footer { padding: 0.85rem 1rem; }
+
+    /* Botones más compactos */
+    .btn-primary, .btn-outline-success { padding: 0.4rem 1rem; }
 }
 
 /* =========================================================

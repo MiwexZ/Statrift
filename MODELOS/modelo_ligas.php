@@ -40,7 +40,7 @@ class modelo_liga
                 : '';
 
             echo "
-            <div class='col-12 col-md-4 col-lg-3 mb-4' data-aos='zoom-in' data-aos-delay='{$delay}'>
+            <div class='col-12 col-sm-6 col-md-4 col-lg-3 mb-4' data-aos='zoom-in' data-aos-delay='{$delay}'>
                 <div class='league-card bg-glass h-100 text-center'>
                     <div class='league-logo-wrap'>
                         {$img_html}

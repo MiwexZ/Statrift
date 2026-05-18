@@ -111,7 +111,7 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.7">
+    <link rel="stylesheet" href="../CSS/style.css?v=2.1">
     <style>
         /* ─── HERO ─────────────────────────────────────────── */
         .build-hero {
@@ -160,7 +160,7 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
         .rune-path-icon { width:40px; height:40px; }
         .rune-path-name { font-weight:700; font-size:1.05rem; color:#fff; }
 
-        .rune-slot { display:flex; justify-content:center; gap:.75rem; margin-bottom:.85rem; }
+        .rune-slot { display:flex; flex-wrap:wrap; justify-content:center; gap:.75rem; margin-bottom:.85rem; }
         .rune-bubble {
             width: 54px; height: 54px; border-radius:50%;
             background: rgba(15,23,42,.8);
@@ -174,11 +174,12 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
         .rune-bubble.keystone { width:70px; height:70px; }
         .rune-bubble.keystone img { width:56px; height:56px; }
 
-        .secondary-slot { display:flex; justify-content:center; gap:.6rem; margin-bottom:.7rem; }
+        .secondary-slot { display:flex; flex-wrap:wrap; justify-content:center; gap:.6rem; margin-bottom:.7rem; }
         .rune-bubble-sm {
             width:46px; height:46px; border-radius:50%;
             background:rgba(15,23,42,.8); border:2px solid rgba(255,255,255,.12);
             display:flex; align-items:center; justify-content:center; transition:.25s;
+            flex-shrink:0;
         }
         .rune-bubble-sm img { width:34px; height:34px; border-radius:50%; filter:grayscale(1) brightness(.45); transition:.25s; }
         .rune-bubble-sm.active { border-color:var(--gold-accent); box-shadow:0 0 12px rgba(197,160,89,.45); }
@@ -219,6 +220,29 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
             text-transform: uppercase;
             color: #94a3b8; /* Un gris más claro para mejor contraste */
             opacity: 0.8;
+        }
+
+        /* ─── ITEMS COLUMN (responsive) ──────────────────────── */
+        .items-col { flex: 0 0 auto; width: 280px; }
+
+        @media (max-width: 991.98px) {
+            .build-hero { height: 280px; }
+            .build-hero-overlay { padding: 1.25rem 1.25rem; }
+            .build-hero-overlay h1 { font-size: 1.9rem; }
+            .items-col { width: 100%; flex: 1 1 auto; }
+            .panel-runes { min-height: 0; }
+        }
+        @media (max-width: 575.98px) {
+            .build-hero { height: 220px; border-radius: 0 0 16px 16px; }
+            .build-hero-overlay h1 { font-size: 1.55rem; }
+            .panel { padding: 1rem; }
+            .rune-bubble { width: 44px; height: 44px; }
+            .rune-bubble img { width: 32px; height: 32px; }
+            .rune-bubble.keystone { width: 58px; height: 58px; }
+            .rune-bubble.keystone img { width: 46px; height: 46px; }
+            .rune-bubble-sm { width: 38px; height: 38px; }
+            .rune-bubble-sm img { width: 28px; height: 28px; }
+            .skill-key-big { width: 32px; height: 32px; font-size: .85rem; }
         }
     </style>
 </head>
@@ -279,7 +303,7 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
                     <div class="panel-title"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Habilidades</div>
                     <div class="row g-2">
                         <?php foreach ($habilidades as $key => $desc): ?>
-                        <div class="col-6">
+                        <div class="col-12 col-sm-6">
                             <div class="skill-card">
                                 <div class="d-flex align-items-center gap-2">
                                     <div class="skill-key-big" style="background:<?= $skill_colors[$key] ?>"><?= $key ?></div>
@@ -295,15 +319,15 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
 
         <!-- RUNAS + ITEMS (OP.GG STYLE) -->
         <?php if ($build): ?>
-        <div class="d-flex gap-4 align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+        <div class="d-flex flex-column flex-lg-row gap-4 align-items-stretch" data-aos="fade-up" data-aos-delay="100">
 
             <!-- ── RUNAS ── -->
             <div style="flex: 1 1 auto; min-width: 0;">
                 <div class="panel panel-runes h-100">
                     <div class="panel-title"><i class="fa-solid fa-gem me-2"></i>Runas</div>
-                    <div class="row">
+                    <div class="row g-3">
                         <!-- PRIMARY PATH -->
-                        <div class="col-6">
+                        <div class="col-12 col-sm-6">
                             <?php if ($primary_path): ?>
                             <div class="rune-path-header">
                                 <img src="<?= DDragonService::runeIcon($primary_path['icon']) ?>" class="rune-path-icon" alt="">
@@ -323,7 +347,7 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
                             <?php endif; ?>
                         </div>
                         <!-- SECONDARY PATH -->
-                        <div class="col-6">
+                        <div class="col-12 col-sm-6">
                             <?php if ($secondary_path): ?>
                             <div class="rune-path-header">
                                 <img src="<?= DDragonService::runeIcon($secondary_path['icon']) ?>" class="rune-path-icon" alt="">
@@ -347,7 +371,7 @@ $skill_colors = ['Q' => '#3b82f6', 'W' => '#22c55e', 'E' => '#a855f7', 'R' => '#
             </div>
 
             <!-- ── ITEMS POR FASE ── -->
-            <div style="flex: 0 0 auto; width: 280px;">
+            <div class="items-col">
                 <div class="panel h-100">
                     <div class="panel-title"><i class="fa-solid fa-hammer me-2"></i>Items</div>
 

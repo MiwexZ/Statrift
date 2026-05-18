@@ -39,7 +39,7 @@ $pos_meta = [
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="../CSS/style.css?v=1.7">
+    <link rel="stylesheet" href="../CSS/style.css?v=2.1">
     <style>
         .team-hero-logo {
             max-width: 180px;
@@ -69,6 +69,12 @@ $pos_meta = [
             display: flex; align-items: center; justify-content: center;
             font-size: 1rem; flex-shrink: 0;
         }
+        .roster-text {
+            flex: 1 1 auto;
+            min-width: 0;          /* permite que el texto se trunque sin empujar el badge */
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
         .roster-nick {
             font-family: 'Outfit', sans-serif;
             font-size: 1.1rem;
@@ -89,6 +95,15 @@ $pos_meta = [
             padding: .2rem .7rem;
             border-radius: 20px;
             background: rgba(255,255,255,0.06);
+            flex-shrink: 0;        /* el badge nunca se encoge */
+            white-space: nowrap;
+        }
+        .team-hero-title { font-size: 2.5rem; }
+        @media (max-width: 575.98px) {
+            .team-hero-title { font-size: 1.7rem; }
+            .team-hero-logo { max-width: 130px; max-height: 130px; }
+            .roster-card { padding: .75rem .9rem; gap: .65rem; }
+            .roster-nick { font-size: 1rem; }
         }
 </style>
 </head>
@@ -113,7 +128,7 @@ $pos_meta = [
                  onerror="this.style.display='none'">
         <?php endif; ?>
 
-        <h1 class="text-gold fw-bold mb-2" style="font-size:2.5rem"><?= $nombre ?></h1>
+        <h1 class="text-gold fw-bold mb-2 team-hero-title"><?= $nombre ?></h1>
 
         <div class="d-flex justify-content-center align-items-center gap-3 flex-wrap mb-3">
             <?php if ($liga): ?>
@@ -154,7 +169,7 @@ $pos_meta = [
                         <div class="roster-pos-icon">
                             <i class="fa-solid <?= $meta['icon'] ?>" style="color:<?= $meta['color'] ?>"></i>
                         </div>
-                        <div>
+                        <div class="roster-text">
                             <div class="roster-nick"><?= $nick ?></div>
                             <?php if ($nreal): ?>
                                 <div class="roster-name"><?= $nreal ?></div>
