@@ -41,12 +41,28 @@ if ($accion === 'delete_post') {
 }
 
 if ($accion === 'delete_user') {
-    $id = intval($_POST['id'] ?? 0);
-    if ($modelo->delete_user($id)) {
-        echo json_encode(['success' => true]);
-    } else {
-        echo json_encode(['success' => false, 'error' => 'No se pudo eliminar el usuario. (No puedes eliminar al admin)']);
+    $id = (int)($_POST['id'] ?? 0);
+    if ($id <= 0) {
+        echo json_encode(['success' => false, 'error' => 'ID inválido']);
+        exit;
     }
+
+    // Sin flag 'forzar': comprobar publicaciones y devolver tiene_publicaciones para que el front muestre modal.
+    if (empty($_POST['forzar'])) {
+        $n = $modelo->tiene_publicaciones($id);
+        if ($n > 0) {
+            echo json_encode([
+                'success'             => false,
+                'tiene_publicaciones' => true,
+                'count'               => $n,
+                'error'               => "El usuario tiene {$n} publicación(es) asociada(s)."
+            ]);
+            exit;
+        }
+    }
+
+    $ok = $modelo->delete_user($id);
+    echo json_encode(['success' => $ok, 'error' => $ok ? null : 'No se pudo eliminar el usuario']);
     exit;
 }
 

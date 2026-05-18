@@ -58,21 +58,102 @@ class modelo_admin
         return $stmt->execute();
     }
 
-    public function delete_user($id): bool
+    public function tiene_publicaciones(int $id): int
     {
-        // Prevenir borrar al admin
+        $stmt = $this->_db->prepare("SELECT COUNT(*) FROM publicaciones WHERE id_jugador = ?");
+        if (!$stmt) {
+            error_log('[modelo_admin::tiene_publicaciones] prepare failed: ' . $this->_db->error);
+            return 0;
+        }
+        $stmt->bind_param("i", $id);
+        if (!$stmt->execute()) {
+            error_log('[modelo_admin::tiene_publicaciones] execute failed: ' . $stmt->error);
+            $stmt->close();
+            return 0;
+        }
+        $row = $stmt->get_result()->fetch_row();
+        $stmt->close();
+        return (int)($row[0] ?? 0);
+    }
+
+    public function delete_user(int $id): bool
+    {
+        // Doble protección admin: SELECT previo + cláusula AND nick != 'admin' en el DELETE final.
         $stmt_check = $this->_db->prepare("SELECT nick FROM jugador WHERE id = ?");
+        if (!$stmt_check) {
+            error_log('[modelo_admin::delete_user] prepare SELECT nick failed: ' . $this->_db->error);
+            return false;
+        }
         $stmt_check->bind_param("i", $id);
         $stmt_check->execute();
         $res = $stmt_check->get_result();
-        if ($res->num_rows > 0 && $res->fetch_assoc()['nick'] === 'admin') {
+        $row = $res ? $res->fetch_assoc() : null;
+        $stmt_check->close();
+        if (!$row) return false;
+        if (($row['nick'] ?? '') === 'admin') return false;
+
+        // 1) Borrar comentarios propios del usuario.
+        $s1 = $this->_db->prepare("DELETE FROM comentario WHERE id_jugador = ?");
+        if (!$s1) {
+            error_log('[modelo_admin::delete_user] prepare DELETE comentario propios failed: ' . $this->_db->error);
             return false;
         }
+        $s1->bind_param("i", $id);
+        if (!$s1->execute() || $this->_db->errno) {
+            error_log('[modelo_admin::delete_user] execute DELETE comentario propios failed: ' . $s1->error);
+            $s1->close();
+            return false;
+        }
+        $s1->close();
 
-        // En un caso real se borrarían dependencias, aquí lo borramos directamente
-        $stmt = $this->_db->prepare("DELETE FROM jugador WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        // 2) Borrar comentarios de OTROS sobre las publicaciones del usuario.
+        //    NOTA: la columna FK lleva tilde literal: `id_publicación`.
+        $s2 = $this->_db->prepare(
+            "DELETE FROM comentario
+             WHERE `id_publicación` IN (SELECT id FROM publicaciones WHERE id_jugador = ?)"
+        );
+        if (!$s2) {
+            error_log('[modelo_admin::delete_user] prepare DELETE comentario sobre pubs failed: ' . $this->_db->error);
+            return false;
+        }
+        $s2->bind_param("i", $id);
+        if (!$s2->execute() || $this->_db->errno) {
+            error_log('[modelo_admin::delete_user] execute DELETE comentario sobre pubs failed: ' . $s2->error);
+            $s2->close();
+            return false;
+        }
+        $s2->close();
+
+        // 3) Borrar las publicaciones del usuario.
+        $s3 = $this->_db->prepare("DELETE FROM publicaciones WHERE id_jugador = ?");
+        if (!$s3) {
+            error_log('[modelo_admin::delete_user] prepare DELETE publicaciones failed: ' . $this->_db->error);
+            return false;
+        }
+        $s3->bind_param("i", $id);
+        if (!$s3->execute() || $this->_db->errno) {
+            error_log('[modelo_admin::delete_user] execute DELETE publicaciones failed: ' . $s3->error);
+            $s3->close();
+            return false;
+        }
+        $s3->close();
+
+        // 4) Borrar el jugador con doble cinturón AND nick != 'admin'.
+        $s4 = $this->_db->prepare("DELETE FROM jugador WHERE id = ? AND nick != 'admin'");
+        if (!$s4) {
+            error_log('[modelo_admin::delete_user] prepare DELETE jugador failed: ' . $this->_db->error);
+            return false;
+        }
+        $s4->bind_param("i", $id);
+        if (!$s4->execute() || $this->_db->errno) {
+            error_log('[modelo_admin::delete_user] execute DELETE jugador failed: ' . $s4->error);
+            $s4->close();
+            return false;
+        }
+        $afectadas = $s4->affected_rows;
+        $s4->close();
+
+        return $afectadas > 0;
     }
 
     public function add_champion(string $nombre, string $q, string $w, string $e, string $r, string $foto, string $rol, string $descripcion): int

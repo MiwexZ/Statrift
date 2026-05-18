@@ -72,6 +72,21 @@ $inicial = strtoupper(substr($user['nick'], 0, 1));
                         <button type="submit" class="btn btn-gold w-100"><i class="fa-solid fa-floppy-disk me-2"></i>Guardar Cambios</button>
                     </form>
                 </div>
+
+                <div class="card mt-4 border border-danger border-opacity-25 bg-dark">
+                    <div class="card-body">
+                        <h6 class="text-danger mb-1">
+                            <i class="fas fa-skull-crossbones me-2"></i>Zona de peligro
+                        </h6>
+                        <p class="text-muted small mb-3">
+                            Una vez eliminada tu cuenta, todos tus datos y publicaciones
+                            serán borrados permanentemente. Esta acción no se puede deshacer.
+                        </p>
+                        <button type="button" class="btn btn-outline-danger btn-sm" id="btnEliminarMiCuenta">
+                            <i class="fas fa-trash me-1"></i>Eliminar mi cuenta
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- COLUMNA DERECHA: ACTIVIDAD Y POSTS -->
@@ -100,6 +115,35 @@ $inicial = strtoupper(substr($user['nick'], 0, 1));
                             <?php endwhile; ?>
                         </div>
                     <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: CONFIRMAR ELIMINACIÓN DE CUENTA -->
+    <div class="modal fade" id="modalConfirmarEliminarCuenta" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white border border-danger border-opacity-25">
+                <div class="modal-header border-bottom border-danger border-opacity-25">
+                    <h5 class="modal-title text-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>¿Eliminar tu cuenta?
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">
+                        Esta acción eliminará permanentemente tu cuenta, todas tus
+                        publicaciones y todos los comentarios asociados.
+                        <strong class="text-danger">No se puede deshacer.</strong>
+                    </p>
+                </div>
+                <div class="modal-footer border-top border-danger border-opacity-25">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancelar
+                    </button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarEliminarCuenta">
+                        <i class="fas fa-trash me-1"></i>Sí, eliminar mi cuenta
+                    </button>
                 </div>
             </div>
         </div>
@@ -138,7 +182,7 @@ $inicial = strtoupper(substr($user['nick'], 0, 1));
         document.querySelectorAll('.btn-delete-mypost').forEach(btn => {
             btn.addEventListener('click', function() {
                 if(!confirm('¿Seguro que quieres borrar tu publicación? Esta acción es irreversible.')) return;
-                
+
                 const id = this.getAttribute('data-id');
                 const formData = new FormData();
                 formData.append('accion', 'delete_my_post');
@@ -149,6 +193,42 @@ $inicial = strtoupper(substr($user['nick'], 0, 1));
                     if(data.success) location.reload();
                     else alert(data.error);
                 });
+            });
+        });
+
+        // Eliminar mi cuenta
+        document.getElementById('btnEliminarMiCuenta').addEventListener('click', function () {
+            bootstrap.Modal.getOrCreateInstance(
+                document.getElementById('modalConfirmarEliminarCuenta')
+            ).show();
+        });
+
+        document.getElementById('btnConfirmarEliminarCuenta').addEventListener('click', function () {
+            this.disabled = true;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Eliminando...';
+
+            fetch('../CONTROLADORES/api_perfil.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'accion=delete_account'
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.replace('../index.php?cuenta=eliminada');
+                } else {
+                    bootstrap.Modal.getOrCreateInstance(
+                        document.getElementById('modalConfirmarEliminarCuenta')
+                    ).hide();
+                    alert('Error: ' + (data.error ?? 'No se pudo eliminar la cuenta'));
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fas fa-trash me-1"></i>Sí, eliminar mi cuenta';
+                }
+            })
+            .catch(() => {
+                alert('Error de conexión. Inténtalo de nuevo.');
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-trash me-1"></i>Sí, eliminar mi cuenta';
             });
         });
     </script>

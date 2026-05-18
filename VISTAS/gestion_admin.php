@@ -541,6 +541,29 @@ $runas_camino  = $modelo->get_runas_por_camino();
         </div>
     </div>
 
+    <!-- MODAL DE CONFIRMACIÓN: BORRAR USUARIO CON PUBLICACIONES -->
+    <div class="modal fade" id="modalConfirmarBorrarUsuario" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white border border-warning border-opacity-25">
+                <div class="modal-header border-bottom border-warning border-opacity-25">
+                    <h5 class="modal-title text-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Eliminar usuario
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modalBorrarUsuarioMsg" class="mb-0"></p>
+                </div>
+                <div class="modal-footer border-top border-warning border-opacity-25">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="btnConfirmarBorrarUsuario">
+                        <i class="fas fa-trash me-1"></i>Eliminar igualmente
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Datos PHP para uso en JS
@@ -762,20 +785,64 @@ $runas_camino  = $modelo->get_runas_por_camino();
         });
 
         // ─── USUARIOS ─────────────────────────────────────────────────────
+        function eliminarUsuario(id) {
+            if (!confirm('¿Eliminar a este usuario de StatRift?')) return;
+            const fd = new FormData();
+            fd.append('accion', 'delete_user');
+            fd.append('id', id);
+            fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.success) {
+                        accionExitosa('alerta-usuarios', 'Usuario eliminado correctamente.', '#usuarios');
+                        return;
+                    }
+                    if (d.tiene_publicaciones) {
+                        const n = parseInt(d.count, 10) || 0;
+                        document.getElementById('modalBorrarUsuarioMsg').textContent =
+                            'Este usuario tiene ' + n + ' publicación(es). Si lo eliminas, ' +
+                            'todas sus publicaciones y comentarios asociados serán eliminados permanentemente. ' +
+                            '¿Deseas continuar?';
+                        const btnConf = document.getElementById('btnConfirmarBorrarUsuario');
+                        btnConf.dataset.userId = String(id);
+                        bootstrap.Modal.getOrCreateInstance(
+                            document.getElementById('modalConfirmarBorrarUsuario')
+                        ).show();
+                        return;
+                    }
+                    accionError('alerta-usuarios', d.error || 'Error desconocido.');
+                })
+                .catch(function() { accionError('alerta-usuarios', 'Error de conexión. Inténtalo de nuevo.'); });
+        }
+
         document.querySelectorAll('.btn-delete-user').forEach(function(btn) {
             btn.addEventListener('click', function() {
-                if (!confirm('¿Eliminar a este usuario de StatRift?')) return;
-                const fd = new FormData();
-                fd.append('accion', 'delete_user');
-                fd.append('id', this.dataset.id);
-                fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
-                    .then(function(r) { return r.json(); })
-                    .then(function(d) {
-                        if (d.success) { accionExitosa('alerta-usuarios', 'Usuario eliminado correctamente.'); }
-                        else { accionError('alerta-usuarios', d.error || 'Error desconocido.'); }
-                    })
-                    .catch(function() { accionError('alerta-usuarios', 'Error de conexión. Inténtalo de nuevo.'); });
+                const id = parseInt(this.dataset.id, 10);
+                if (!id) return;
+                eliminarUsuario(id);
             });
+        });
+
+        document.getElementById('btnConfirmarBorrarUsuario').addEventListener('click', function() {
+            const id = parseInt(this.dataset.userId, 10);
+            if (!id) return;
+            bootstrap.Modal.getInstance(
+                document.getElementById('modalConfirmarBorrarUsuario')
+            ).hide();
+            const fd = new FormData();
+            fd.append('accion', 'delete_user');
+            fd.append('id', id);
+            fd.append('forzar', '1');
+            fetch('/CONTROLADORES/api_admin.php', { method: 'POST', body: fd })
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (d.success) {
+                        accionExitosa('alerta-usuarios', 'Usuario y sus publicaciones eliminados.', '#usuarios');
+                    } else {
+                        accionError('alerta-usuarios', d.error || 'Error desconocido.');
+                    }
+                })
+                .catch(function() { accionError('alerta-usuarios', 'Error de conexión. Inténtalo de nuevo.'); });
         });
 
         // ─── CAMPEONES ────────────────────────────────────────────────────
